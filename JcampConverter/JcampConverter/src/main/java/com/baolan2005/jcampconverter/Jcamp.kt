@@ -1,5 +1,6 @@
 package com.baolan2005.jcampconverter
 
+import android.util.Log
 import com.baolan2005.jcampconverter.utils.isNumberic
 import java.lang.Exception
 import java.lang.reflect.Array
@@ -15,20 +16,19 @@ class Jcamp {
     lateinit var children: ArrayList<Jcamp>
 
     public class Spectra {
-        public lateinit var xValues: ArrayList<Double>
-        public lateinit var yValues: ArrayList<Double>
+        public var xValues: ArrayList<Double>
+        public var yValues: ArrayList<Double>
         public var isReal = true
-
-        constructor() {}
 
         constructor(xValues: ArrayList<Double>, yValues: ArrayList<Double>, isReal: Boolean) {
             this.xValues = xValues
             this.yValues = yValues
             this.isReal = isReal
         }
+
     }
 
-    public var spectra: ArrayList<Spectra> = ArrayList()
+    var spectra: ArrayList<Spectra> = ArrayList()
     public var dicData: HashMap<String, Any> = HashMap()
 
     public fun hasChild(): Boolean {
@@ -37,8 +37,6 @@ class Jcamp {
         }
         return false
     }
-
-    constructor() { }
 
     constructor(originData: ArrayList<Any>) {
         var arrStartOfX = ArrayList<Double>()
@@ -69,6 +67,7 @@ class Jcamp {
                     if (isReadingData) {
                         var dataString = childString
                         dataString = dataString.replace("$$ checkpoint", "")
+                        dataString = dataString.replace(" ", "")
 
                         var dataClass = ""
                         if (this.dicData.containsKey("##DATA CLASS")) {
@@ -202,7 +201,7 @@ class Jcamp {
                                 //check previous is DIF form
                                 prevHasLastDIF = lastDIF
 
-                                for (i in 1 until parsedValues.size-1) {
+                                for (i in 1 until parsedValues.size) {
                                     var y = parsedValues[i]
                                     y *= yFactor
                                     arrY.add(y)
@@ -239,7 +238,7 @@ class Jcamp {
                     }
                     else if (isReadingUserDefine) {
                         //reading user defined values
-                        var userDefinedArrData: ArrayList<String>? = this.dicData[userDefineValue] as ArrayList<String>?
+                        var userDefinedArrData: ArrayList<String>? = this.dicData[userDefineValue] as? ArrayList<String>?
                         if (userDefinedArrData == null) {
                             userDefinedArrData = ArrayList()
                         }
@@ -260,7 +259,9 @@ class Jcamp {
                         dataType = childString
                     }
                     else if (arrX.isNotEmpty()) {
-                        val spec = Spectra(arrX, arrY, isRealData)
+                        val xValues = arrX.clone() as ArrayList<Double>
+                        val yValues = arrY.clone() as ArrayList<Double>
+                        val spec = Spectra(xValues, yValues, isRealData)
                         this.spectra.add(spec)
                         arrX.clear()
                         arrY.clear()
@@ -316,10 +317,10 @@ class Jcamp {
                 continue
             }
             if (c.isNumberic() || c.equals('.', true)) {
-                tmpStr.plus(c)
+                tmpStr = tmpStr.plus(c)
             }
             else {
-                if (!tmpStr.equals("")) {
+                if (tmpStr != "") {
                     tmpStr = tmpStr.trim()
                     result.add(tmpStr)
                     tmpStr = ""
@@ -331,7 +332,7 @@ class Jcamp {
                     if (idx < scanStr.length - 1) {
                         startPoint = idx+1
                         while (scanStr[startPoint].isNumberic()) {
-                            nextChars.plus(scanStr[idx+1])
+                            nextChars = nextChars.plus(scanStr[idx+1])
                             startPoint += 1
                         }
                     }
@@ -354,10 +355,10 @@ class Jcamp {
                 }
                 else if (Constants.SQZ.containsKey(charString)) {
                     val sqzVal = Constants.SQZ[charString]
-                    tmpStr.plus(sqzVal)
+                    tmpStr = tmpStr.plus(sqzVal)
                 }
                 else {
-                    tmpStr.plus(c)
+                    tmpStr = tmpStr.plus(c)
                 }
             }
         }

@@ -4,7 +4,7 @@ public fun <T> ArrayList<T>.push(item: T) {
     this.add(item)
 }
 
-public fun <T> ArrayList<T>.pop() : T {
+public fun <T> ArrayList<T>.pop() : T? {
     val last = this.last()
     if (last != null) {
         this.removeLast()
@@ -12,6 +12,9 @@ public fun <T> ArrayList<T>.pop() : T {
     return last
 }
 
-public fun <T> ArrayList<T>.peak(): T {
+public fun <T> ArrayList<T>.peak(): T? {
+    if (this.isNullOrEmpty()) {
+        return null
+    }
     return this.last()
 }

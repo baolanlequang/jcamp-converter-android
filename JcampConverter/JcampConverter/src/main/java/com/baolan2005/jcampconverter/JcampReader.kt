@@ -1,21 +1,37 @@
 package com.baolan2005.jcampconverter
 
+import android.util.Log
 import java.io.File
+import java.io.InputStream
 import java.lang.Exception
 
 class JcampReader {
-    lateinit var jcamp: Jcamp
+    private val TAG = "JcampReader"
+
+    var jcamp: Jcamp? = null
 
     constructor() {}
 
-    constructor(filePath: String) {
+//    constructor(filePath: String) {
+//        try {
+//            val data = File(filePath).readLines(Charsets.US_ASCII)
+//            val structuredData = parsingStructure(data)
+//            this.jcamp = Jcamp(structuredData)
+//        }
+//        catch (e: Exception) {
+//            Log.d(TAG, e.toString())
+//        }
+//    }
+
+    constructor(inputStream: InputStream) {
         try {
-            val data = File(filePath).readLines(Charsets.US_ASCII)
+            val data = mutableListOf<String>()
+            inputStream.bufferedReader(Charsets.US_ASCII).useLines { lines -> lines.forEach { data.add(it) } }
             val structuredData = parsingStructure(data)
             this.jcamp = Jcamp(structuredData)
         }
         catch (e: Exception) {
-
+            Log.d(TAG, e.toString())
         }
     }
 
@@ -42,7 +58,7 @@ class JcampReader {
         return Pair(stack, queue)
     }
 
-    private fun parsingStructure(data: List<String>): ArrayList<Any> {
+    private fun parsingStructure(data: MutableList<String>): ArrayList<Any> {
         var stack = ArrayList<Any>()
 
         for (line in data) {
@@ -60,8 +76,8 @@ class JcampReader {
                 stack.push(trimmedLine)
             }
             else {
-            stack.push(trimmedLine)
-        }
+                stack.push(trimmedLine)
+            }
         }
 
         return stack

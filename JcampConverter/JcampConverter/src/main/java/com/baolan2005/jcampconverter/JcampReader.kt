@@ -12,17 +12,6 @@ class JcampReader {
 
     constructor() {}
 
-//    constructor(filePath: String) {
-//        try {
-//            val data = File(filePath).readLines(Charsets.US_ASCII)
-//            val structuredData = parsingStructure(data)
-//            this.jcamp = Jcamp(structuredData)
-//        }
-//        catch (e: Exception) {
-//            Log.d(TAG, e.toString())
-//        }
-//    }
-
     constructor(inputStream: InputStream) {
         try {
             val data = mutableListOf<String>()

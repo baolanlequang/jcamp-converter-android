@@ -67,7 +67,7 @@ class Jcamp {
                     if (isReadingData) {
                         var dataString = childString
                         dataString = dataString.replace("$$ checkpoint", "")
-                        dataString = dataString.replace(" ", "")
+
 
                         var dataClass = ""
                         if (this.dicData.containsKey("##DATA CLASS")) {
@@ -307,6 +307,7 @@ class Jcamp {
     private fun scanner(strVal: String): ArrayList<String> {
         var result = ArrayList<String>()
 
+
         var tmpStr = ""
         val scanStr = strVal
 
@@ -379,6 +380,9 @@ class Jcamp {
         var hasLastDIF = false
 
         for ((idx, value) in scannedResult.withIndex()) {
+            if (value == "") {
+                continue
+            }
             try {
                 val doubleVal = value.toDouble()
                 result.add(doubleVal)
@@ -388,7 +392,7 @@ class Jcamp {
                 // DIF value
                 val firstChar = value[0].toString()
                 val intFirst: String = Constants.DIF[firstChar]!!
-                val subVal = value.subSequence(1, value.length-1)
+                val subVal = value.subSequence(1, value.length)
                 val difValStr = intFirst.plus(subVal)
                 try {
                     val difVal = difValStr.toDouble()

@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val input = assets.open("testdata/test_file_10_failed.dx")
+        val input = assets.open("testdata/test_file_20.dx")
 
         val reader = JcampReader(input)
         val jcamp = reader.jcamp

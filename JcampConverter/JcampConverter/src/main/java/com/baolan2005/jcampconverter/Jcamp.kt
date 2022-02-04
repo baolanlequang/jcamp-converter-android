@@ -307,20 +307,17 @@ class Jcamp {
     private fun scanner(strVal: String): ArrayList<String> {
         var result = ArrayList<String>()
 
-
         var tmpStr = ""
-        val scanStr = strVal
 
         var startPoint = -1
 
-        for ((idx, c) in scanStr.withIndex()) {
-            if (idx == startPoint-1) {
+        for ((idx, c) in strVal.withIndex()) {
+            if (idx == startPoint - 1) {
                 continue
             }
             if (c.isNumberic() || c.equals('.', true)) {
                 tmpStr = tmpStr.plus(c)
-            }
-            else {
+            } else {
                 if (tmpStr != "") {
                     tmpStr = tmpStr.trim()
                     result.add(tmpStr)
@@ -330,10 +327,10 @@ class Jcamp {
                 val charString = c.toString()
                 if (Constants.DUP.containsKey(charString)) {
                     var nextChars = ""
-                    if (idx < scanStr.length - 1) {
-                        startPoint = idx+1
-                        while (scanStr[startPoint].isNumberic()) {
-                            nextChars = nextChars.plus(scanStr[idx+1])
+                    if (idx < strVal.length - 1) {
+                        startPoint = idx + 1
+                        while (strVal[startPoint].isNumberic()) {
+                            nextChars = nextChars.plus(strVal[idx + 1])
                             startPoint += 1
                         }
                     }
@@ -341,24 +338,22 @@ class Jcamp {
                     val strDupValFull = "%d%s".format(Locale.getDefault(), dupVal, nextChars)
                     var dupValInt: Int = dupVal
                     try {
-                        strDupValFull.toInt()
-                    }
-                    catch (e: Exception) {
+                        dupValInt = strDupValFull.toInt()
+                    } catch (e: Exception) {
 
                     }
                     //Check DUP
                     for (i in 0 until dupValInt-1) {
                         val lastTmpStr = result.last()
+//                        Log.d("baolanlequang", lastTmpStr)
                         if (!lastTmpStr.isNullOrEmpty()) {
                             result.add(lastTmpStr)
                         }
                     }
-                }
-                else if (Constants.SQZ.containsKey(charString)) {
+                } else if (Constants.SQZ.containsKey(charString)) {
                     val sqzVal = Constants.SQZ[charString]
                     tmpStr = tmpStr.plus(sqzVal)
-                }
-                else {
+                } else {
                     tmpStr = tmpStr.plus(c)
                 }
             }

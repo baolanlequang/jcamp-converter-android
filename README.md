@@ -7,7 +7,7 @@
 **MoJcampConverter** is released as dependency package on [jitpack](https://jitpack.io). 
 
 ### 1. Add *MoJcampConverter* to your project
-Add *jitpack* in your root build.gradle at the end of repositories:
+Add `jitpack` in your root build.gradle at the end of repositories:
 ```
 allprojects {
     repositories {

@@ -2,11 +2,7 @@ package com.baolan2005.jcampconverter
 
 import android.util.Log
 import com.baolan2005.jcampconverter.utils.isNumberic
-import java.lang.Exception
-import java.lang.reflect.Array
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class Jcamp {
     private val arrTitleData = arrayOf("xydata", "peaktable", "peak table", "xypoints", "data table")
@@ -38,7 +34,7 @@ class Jcamp {
         return false
     }
 
-    constructor(originData: ArrayList<Any>) {
+    constructor(originData: Array<Any>) {
         var arrStartOfX = ArrayList<Double>()
         var arrNumberOfX = ArrayList<Int>()
 
@@ -53,8 +49,8 @@ class Jcamp {
         var isRealData = true
 
         for (value in originData) {
-            if (value is Array) {
-                val childData = arrayListOf<Any>(value)
+            if (value::class.java.isArray) {
+                val childData: Array<Any> = value as Array<Any>
                 val childJcamp = Jcamp(childData)
                 if (this.children == null) {
                     this.children = ArrayList()

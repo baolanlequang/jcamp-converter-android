@@ -24,7 +24,7 @@ class JcampReader {
         }
     }
 
-    private fun popChildBlock(inputStack: ArrayList<Any>, inputQueue: ArrayList<Any>): Pair<ArrayList<Any>, ArrayList<Any>> {
+    private fun popChildBlock(inputStack: ArrayList<Any>, inputQueue: ArrayList<Any>): Pair<ArrayList<Any>, Array<Any>> {
         var stack: ArrayList<Any> = inputStack.clone() as ArrayList<Any>
         var queue: ArrayList<Any> = inputQueue.clone() as ArrayList<Any>
         var topStack = stack.peak()
@@ -44,10 +44,10 @@ class JcampReader {
             }
         }
 
-        return Pair(stack, queue)
+        return Pair(stack, queue.toArray())
     }
 
-    private fun parsingStructure(data: MutableList<String>): ArrayList<Any> {
+    private fun parsingStructure(data: MutableList<String>): Array<Any> {
         var stack = ArrayList<Any>()
 
         for (line in data) {
@@ -69,6 +69,6 @@ class JcampReader {
             }
         }
 
-        return stack
+        return stack.toArray()
     }
 }

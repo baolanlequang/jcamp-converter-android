@@ -13,7 +13,7 @@ class Jcamp {
     private val arrTypeDataXPlusY = arrayOf("(X++(Y..Y)", "(X++(R..R)", "(X++(I..I)")
     private val arrTypeDataXY = arrayOf("(XY..XY)")
 
-    lateinit var children: ArrayList<Jcamp>
+    var children: ArrayList<Jcamp>? = null;
 
     public class Spectra {
         public var xValues: ArrayList<Double>
@@ -33,7 +33,7 @@ class Jcamp {
 
     public fun hasChild(): Boolean {
         if (children != null) {
-            return children.size > 0
+            return children!!.size > 0
         }
         return false
     }
@@ -59,7 +59,7 @@ class Jcamp {
                 if (this.children == null) {
                     this.children = ArrayList()
                 }
-                this.children.add(childJcamp)
+                this.children?.add(childJcamp)
             }
             else if (value is String) {
                 val childString = value

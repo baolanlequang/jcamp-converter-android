@@ -21,7 +21,7 @@ allprojects {
 ### 2. Add the dependency
 ```
 dependencies {
-        implementation 'com.github.baolanlequang:jcamp-converter-android:Tag'
+        implementation 'com.github.baolanlequang:jcamp-converter-android:0.0.7'
 }
 ```
 

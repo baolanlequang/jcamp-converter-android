@@ -19,33 +19,28 @@ class DatasetHelper {
 
         for ((idx, char) in value.withIndex()) {
             val charString = char.toString()
-//            if let dupValue = DUP[charString] {
-//                let prevChar = value[idx-1]
-//                let newChars = Array(repeating: prevChar, count: dupValue-1)
-//                convertedStr += newChars.joined()
-//            }
-//            else {
-//                convertedStr += charString
-//            }
+            DUP[charString]?.let { dupValue ->
+                val prevChar = value[idx-1]
+                val newChars = Array(dupValue-1) { prevChar }
+                convertedStr += newChars.joinToString("")
+            } ?: run {
+                convertedStr += charString
+            }
         }
         return convertedStr
     }
 
-//    func convertDUP(_ value: String) -> String {
-//        var convertedStr = ""
-//
-//        for (idx, char) in value.enumerated() {
-//            let charString = String(char)
-//            if let dupValue = DUP[charString] {
-//                let prevChar = value[idx-1]
-//                let newChars = Array(repeating: prevChar, count: dupValue-1)
-//                convertedStr += newChars.joined()
-//            }
-//            else {
-//                convertedStr += charString
-//            }
-//        }
-//
-//        return convertedStr
-//    }
+    fun convertSQZ(value: String): String {
+        var convertedStr = ""
+
+        for (char in value) {
+            val charString = char.toString()
+            SQZ[charString]?.let { sqzValue ->
+                convertedStr += sqzValue
+            } ?: run {
+                convertedStr += charString
+            }
+        }
+        return convertedStr
+    }
 }

@@ -37,22 +37,24 @@ class DatasetHelperTest {
 
         for ((idx, value) in arrValues.withIndex()) {
             val convetedDUP = datasetHelper.convertDUP(value)
-//            let expected = expectedValues[idx]
-//
-//            XCTAssertEqual(convetedDUP, expected)
+            val expected = expectedValues[idx]
+
+            assertEquals(expected, convetedDUP)
         }
     }
-//
-//    func testConvertSQZ() throws {
-//        let arrValues = ["", "12", "@", "1A", "1B", "1C", "1D", "1E", "1F", "1G", "1H", "1I", "1a", "1b", "1c", "1d", "1e", "1f", "1g", "1h", "1i"]
-//        let expectedValues = ["", "12", "0", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9"]
-//        for (idx, value) in arrValues.enumerated() {
-//            let convetedSQZ = datasetHelper.convertSQZ(value)
-//            let expected = expectedValues[idx]
-//
-//            XCTAssertEqual(convetedSQZ, expected)
-//        }
-//    }
+
+    @Test
+    fun testConvertSQZ() {
+        val arrValues = arrayOf("", "12", "@", "1A", "1B", "1C", "1D", "1E", "1F", "1G", "1H", "1I", "1a", "1b", "1c", "1d", "1e", "1f", "1g", "1h", "1i")
+        val expectedValues = arrayOf("", "12", "0", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9")
+
+        for ((idx, value) in arrValues.withIndex()) {
+            val convetedSQZ = datasetHelper.convertSQZ(value)
+            val expected = expectedValues[idx]
+
+            assertEquals(expected, convetedSQZ)
+        }
+    }
 //
 //    func testConvertedDIF() throws {
 //        let arrValues = ["", "1%", "1J", "1K", "1L", "1M", "1N", "1O", "1P", "1Q", "1R", "1j", "1k", "1l", "1m", "1n", "1o", "1p", "1q", "1r"]

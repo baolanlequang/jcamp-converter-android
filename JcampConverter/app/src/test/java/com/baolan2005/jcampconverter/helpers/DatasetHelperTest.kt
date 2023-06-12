@@ -55,29 +55,33 @@ class DatasetHelperTest {
             assertEquals(expected, convetedSQZ)
         }
     }
-//
-//    func testConvertedDIF() throws {
-//        let arrValues = ["", "1%", "1J", "1K", "1L", "1M", "1N", "1O", "1P", "1Q", "1R", "1j", "1k", "1l", "1m", "1n", "1o", "1p", "1q", "1r"]
-//        let expectedValues = ["", "1.0", "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "0.0", "-1.0", "-2.0", "-3.0", "-4.0", "-5.0", "-6.0", "-7.0", "-8.0"]
-//        for (idx, value) in arrValues.enumerated() {
-//            let convetedDIF = datasetHelper.convertDIF(value)
-//            let expected = expectedValues[idx]
-//
-//            XCTAssertEqual(convetedDIF, expected)
-//        }
-//    }
-//
-//    func testSplitFIXForm() throws {
-//        let strValue = "987654321.25 987654321    +10          -11"
-//        let expected = ["987654321.25", "987654321", "+10", "-11"]
-//        let splitted = datasetHelper.splitString(strValue)
-//        XCTAssertEqual(splitted, expected)
-//    }
-//
-//    func testSplitPACForm() throws {
-//        let strValue = "1+10-11"
-//        let expected = ["1","+10","-11"]
-//        let splitted = datasetHelper.splitString(strValue)
-//        XCTAssertEqual(splitted, expected)
-//    }
+
+    @Test
+    fun testConvertedDIF() {
+        val arrValues = arrayOf("", "1%", "1J", "1K", "1L", "1M", "1N", "1O", "1P", "1Q", "1R", "1j", "1k", "1l", "1m", "1n", "1o", "1p", "1q", "1r")
+        val expectedValues = arrayOf("", "1.0", "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "0.0", "-1.0", "-2.0", "-3.0", "-4.0", "-5.0", "-6.0", "-7.0", "-8.0")
+
+        for ((idx, value) in arrValues.withIndex()) {
+            val convetedDIF = datasetHelper.convertDIF(value)
+            val expected = expectedValues[idx]
+
+            assertEquals(expected, convetedDIF)
+        }
+    }
+
+    @Test
+    fun testSplitFIXForm() {
+        val strValue = "987654321.25 987654321    +10          -11"
+        val expected = arrayOf("987654321.25", "987654321", "+10", "-11")
+        val splitted = datasetHelper.splitString(strValue)
+        assertArrayEquals(splitted, expected)
+    }
+
+    @Test
+    fun testSplitPACForm() {
+        val strValue = "1+10-11"
+        val expected = arrayOf("1","+10","-11")
+        val splitted = datasetHelper.splitString(strValue)
+        assertArrayEquals(splitted, expected)
+    }
 }

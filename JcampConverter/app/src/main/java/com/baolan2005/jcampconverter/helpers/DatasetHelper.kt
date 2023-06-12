@@ -43,4 +43,40 @@ class DatasetHelper {
         }
         return convertedStr
     }
+
+    fun convertDIF(value: String): String {
+        var convertedStr = ""
+        var previousNumberStr = ""
+
+        for (char in value) {
+            val charString = char.toString()
+            DIF[charString]?.let { difValue ->
+                val previousValue = previousNumberStr.toDoubleOrNull() ?: 0.0
+                val numberValue = previousValue + difValue.toDouble()
+                convertedStr = numberValue.toString()
+            } ?: run {
+                previousNumberStr += charString
+            }
+        }
+        return convertedStr
+    }
+
+    fun splitString(value: String): Array<String> {
+        val asdfRegexPattern = "[a-sA-Z@%]"
+
+        val regexASDF = Regex(asdfRegexPattern)
+        val matchesASDF = regexASDF.findAll(value)
+        if (matchesASDF.count() > 0) {
+            return arrayOf(value)
+        }
+
+        val splitRegexPattern = "[+-]?\\d+(\\.\\d+)?"
+        val splitRegex = Regex(splitRegexPattern)
+        val matches = splitRegex.findAll(value)
+        val numbersArray = matches.map { it.value }.toList()
+
+        return if (numbersArray.size > 1) numbersArray.toTypedArray() else arrayOf(value)
+    }
+
+
 }

@@ -141,40 +141,27 @@ class JcampTest {
         assertEquals(109.0, listX.last()?.toDouble())
     }
 
-//
-//    func testInitJcampFromURLStr() throws {
-//        let bundle = Bundle(for: type(of: self))
-//
-//        guard let fileURL = bundle.url(forResource: "test_file_8", withExtension: "dx") else {
-//            XCTFail("Failed to locate file")
-//            return
-//        }
-//
-//        jcamp = Jcamp(fileURL.absoluteString)
-//
-//        XCTAssertNotNil(jcamp)
-//        XCTAssertEqual(jcamp?.spectra.count, 1)
-//        XCTAssertEqual(jcamp?.labeledDataRecords.count, 1)
-//
-//        let listX = jcamp?.spectra.first?.getListX()
-//        XCTAssertEqual(listX?.last?.rounded(), 4000.0)
-//    }
-//
-//    func testJcampHasTuples() throws {
-//        let bundle = Bundle(for: type(of: self))
-//
-//        guard let fileURL = bundle.url(forResource: "File012", withExtension: "dx") else {
-//            XCTFail("Failed to locate file")
-//            return
-//        }
-//
-//        jcamp = Jcamp(fileURL.absoluteString)
-//
-//        XCTAssertNotNil(jcamp)
-//        XCTAssertEqual(jcamp?.spectra.count, 4)
-//        XCTAssertEqual(jcamp?.labeledDataRecords.count, 4)
-//
-//        let listX = jcamp?.spectra.first?.getListX()
-//        XCTAssertEqual(listX?.last, 4.0893216)
-//    }
+    @Test
+    fun testInitJcampFromURLStr() {
+        val url = "https://raw.githubusercontent.com/baolanlequang/jcamp-converter-ios/master/JCAMPConveter/JCAMPConveterTests/testdata/test_file_8.dx"
+        jcamp = Jcamp(url)
+
+        val firstSpectrum = jcamp.spectra.first()
+        assertNotNull(firstSpectrum)
+
+        val listX = firstSpectrum.getListX()
+        assertEquals(4000, listX.last().roundToInt())
+    }
+
+    @Test
+    fun testJcampHasTuples() {
+        val url = "https://raw.githubusercontent.com/baolanlequang/jcamp-converter-ios/master/JCAMPConveter/JCAMPConveterTests/testdata/nmr/File012.dx"
+        jcamp = Jcamp(url)
+
+        assertEquals(4, jcamp.spectra.size)
+        assertEquals(4, jcamp.labeledDataRecords.size)
+
+        val listX = jcamp.spectra.first().getListX()
+        assertEquals(4.0893216, listX.last()?.toDouble())
+    }
 }

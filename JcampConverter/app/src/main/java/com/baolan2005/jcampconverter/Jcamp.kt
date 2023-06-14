@@ -1,29 +1,28 @@
 package com.baolan2005.jcampconverter
 
+import android.util.Log
+import java.lang.Exception
+import java.net.URL
+
 class Jcamp {
     var spectra: ArrayList<Spectrum> = arrayListOf()
     var labeledDataRecords: ArrayList<HashMap<String, String>> = arrayListOf()
 
-    private lateinit var originData: List<String>
+    private var originData: List<String>
 
     constructor(stringData: String) {
 
-//        if let fileURL = URL(string: stringData) {
-//            do {
-//                let data = try String(contentsOf: fileURL, encoding: .ascii)
-//                    self.originData = data.components(separatedBy: .newlines)
-//                    self.readData()
-//                }
-//                catch {
-//                    print(error)
-//                }
-//            }
-//        else {
-//            self.originData = stringData.components(separatedBy: .newlines)
-//            self.readData()
-//        }
-        originData = stringData.split("\n")
-        readData()
+        try {
+            val inputStream = URL(stringData).openStream()
+            val data = mutableListOf<String>()
+            inputStream.bufferedReader(Charsets.US_ASCII).useLines { lines -> lines.forEach { data.add(it) } }
+            originData = data
+            readData()
+        }
+        catch (e: Exception) {
+            originData = stringData.split("\n")
+            readData()
+        }
     }
 
     private fun getSpectrum(arrData: Array<String>, dataRecords: Array<String>) {
@@ -31,7 +30,7 @@ class Jcamp {
             return
         }
 
-        var dicDataRecord: HashMap<String, String> = hashMapOf()
+        val dicDataRecord: HashMap<String, String> = hashMapOf()
         for (record in dataRecords) {
             val values = record.split("=")
             val label = values[0]

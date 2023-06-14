@@ -62,7 +62,6 @@ class Spectrum {
             }
         }
 
-        println(listY)
         val deltaX = (lastX - firstX) / (nPoints - 1)
 
         for ((idx, startX) in arrStartX.withIndex()) {

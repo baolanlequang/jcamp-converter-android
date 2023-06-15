@@ -1,6 +1,5 @@
 package com.baolan2005.jcampconverter
 
-import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 import kotlin.math.roundToInt

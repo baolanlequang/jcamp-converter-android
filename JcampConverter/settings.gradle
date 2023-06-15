@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "JcampConverter"
 include ':app'
+include ':JcampConverter'

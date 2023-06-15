@@ -1,6 +1,5 @@
 package com.baolan2005.jcampconverter
 
-import android.util.Log
 import java.lang.Exception
 import java.net.URL
 

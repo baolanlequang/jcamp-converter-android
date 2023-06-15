@@ -1,11 +1,9 @@
 package com.baolan2005.jcampconverter
 
-import com.baolan2005.jcampconverter.helpers.Parser
-
 class Spectrum {
     private var dataString: String
 
-    private var parser: Parser
+    private var parser: com.baolan2005.jcampconverter.helpers.Parser
 
     private var listX: ArrayList<ArrayList<Double>> = arrayListOf()
     private var listY: ArrayList<ArrayList<Double>> = arrayListOf()
@@ -16,7 +14,7 @@ class Spectrum {
 
     constructor(data: String, dataFormat: String, factorX: Double = 1.0, factorY: Double = 1.0, firstX: Double = 0.0, lastX: Double = 0.0) {
         this.dataString = data
-        this.parser = Parser()
+        this.parser = com.baolan2005.jcampconverter.helpers.Parser()
         this.factorX = factorX
         this.factorY = factorY
         this.firstX = firstX
